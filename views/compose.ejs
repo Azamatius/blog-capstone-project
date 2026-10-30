@@ -1,0 +1,25 @@
+<%- include("partials/header", { pageTitle }) %>
+<section class="form-page">
+  <a class="back-link" href="<%= post.id ? `/posts/${post.id}` : "/" %>"><span aria-hidden="true">←</span> Назад</a>
+  <p class="eyebrow">ВАША ИСТОРИЯ</p>
+  <h1><%= heading %></h1>
+  <p class="form-intro">Не торопитесь. Хорошие мысли любят пространство.</p>
+
+  <% if (error) { %>
+    <div class="form-error" role="alert"><%= error %></div>
+  <% } %>
+
+  <form class="post-form" action="<%= action %>" method="POST">
+    <label for="title">Заголовок</label>
+    <input id="title" name="title" type="text" maxlength="120" placeholder="О чём вы думаете?" value="<%= post.title %>" required>
+
+    <label for="content">Текст записи</label>
+    <textarea id="content" name="content" rows="12" maxlength="20000" placeholder="Начните с первой мысли…" required><%= post.content %></textarea>
+
+    <div class="form-actions">
+      <button class="button" type="submit"><%= post.id ? "Сохранить изменения" : "Опубликовать запись" %> <span aria-hidden="true">↗</span></button>
+      <span class="form-note">Записи хранятся до перезапуска сервера.</span>
+    </div>
+  </form>
+</section>
+<%- include("partials/footer") %>

@@ -1,0 +1,16 @@
+<%- include("partials/header", { pageTitle: post.title }) %>
+<article class="article-page">
+  <a class="back-link" href="/"><span aria-hidden="true">←</span> Все записи</a>
+  <header class="article-header">
+    <p class="eyebrow">ЗАПИСЬ · <%= formatDate(post.createdAt) %><% if (post.updatedAt) { %> · ОБНОВЛЕНО<% } %></p>
+    <h1><%= post.title %></h1>
+  </header>
+  <div class="article-content"><%= post.content %></div>
+  <div class="article-actions">
+    <a class="button button-secondary" href="/posts/<%= post.id %>/edit">Редактировать <span aria-hidden="true">↗</span></a>
+    <form action="/posts/<%= post.id %>/delete" method="POST" onsubmit="return confirm('Удалить эту запись? Это действие нельзя отменить.');">
+      <button class="button button-danger" type="submit">Удалить запись</button>
+    </form>
+  </div>
+</article>
+<%- include("partials/footer") %>

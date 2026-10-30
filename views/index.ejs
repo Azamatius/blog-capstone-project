@@ -1,0 +1,39 @@
+<%- include("partials/header", { pageTitle: "Все записи" }) %>
+<section class="intro">
+  <p class="eyebrow">ЛИЧНОЕ ПРОСТРАНСТВО · <%= posts.length %> <%= posts.length === 1 ? "ЗАПИСЬ" : "ЗАПИСЕЙ" %></p>
+  <h1>Мысли, которым<br>нужно <em>место.</em></h1>
+  <p class="intro-copy">Небольшой уголок для заметок, историй и всего, что хочется сохранить.</p>
+  <a class="text-link" href="/posts/new">Начать писать <span aria-hidden="true">→</span></a>
+</section>
+
+<section class="posts-section" aria-labelledby="posts-heading">
+  <div class="section-heading">
+    <h2 id="posts-heading">Последние записи</h2>
+    <span class="section-count"><%= String(posts.length).padStart(2, "0") %></span>
+  </div>
+
+  <% if (posts.length === 0) { %>
+    <div class="empty-state">
+      <span class="empty-icon" aria-hidden="true">✳</span>
+      <h3>Здесь пока тихо</h3>
+      <p>Создайте первую запись — она появится здесь.</p>
+      <a class="button" href="/posts/new">Написать первый пост <span aria-hidden="true">↗</span></a>
+    </div>
+  <% } else { %>
+    <div class="post-list">
+      <% posts.forEach((post, index) => { %>
+        <article class="post-card">
+          <div class="post-index"><%= String(index + 1).padStart(2, "0") %></div>
+          <div class="post-card-body">
+            <p class="post-date"><%= formatDate(post.createdAt) %><% if (post.updatedAt) { %> · ОБНОВЛЕНО<% } %></p>
+            <h3><a href="/posts/<%= post.id %>"><%= post.title %></a></h3>
+            <p class="post-excerpt"><%= post.content.length > 220 ? `${post.content.slice(0, 220).trim()}…` : post.content %></p>
+            <a class="text-link post-read-link" href="/posts/<%= post.id %>">Читать запись <span aria-hidden="true">→</span></a>
+          </div>
+          <a class="card-arrow" href="/posts/<%= post.id %>" aria-label="Открыть запись «<%= post.title %>»">↗</a>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+<%- include("partials/footer") %>
